@@ -32,7 +32,7 @@ Y = tf.placeholder(tf.float32, [None, num_classes])
 
 
 # 레이어(layer)의 weight와 bias를 저장할 변수를 선언합니다.
-# 코드를 간결하게 하기 위해서 딕셔너리를 이용합니다.
+# 코드를 간결하게 하기 위해서 딕셔너리를 이용합니다. ( dic = {key : value} )
 weights = {
     'h1': tf.Variable(tf.random_normal([num_input, n_hidden_1])),
     'h2': tf.Variable(tf.random_normal([n_hidden_1, n_hidden_2])),

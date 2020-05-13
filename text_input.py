@@ -87,6 +87,13 @@ with tf.Session() as sess:
         gray = cv2.resize(gray, (28, 28), interpolation=cv2.INTER_AREA)
 
         (thresh, gray) = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
+        
+
+        #cv2.threshold -> 이미지 임계처리 (임계값보다 크면 백, 작으면 흑)
+        #cv2.THRESH_BINARY_INV -> threshold 임계조건, BINARY 즉 완전 백 혹은 완전 흑으로 변환한다는 뜻이다.(THRESH_BINARY 의 반전형태)
+        #이미지이진화에 관한 참고자료 : https://youtu.be/VtVPLJODqKw
+
+
 
         while np.sum(gray[0]) == 0:
             gray = gray[1:]
