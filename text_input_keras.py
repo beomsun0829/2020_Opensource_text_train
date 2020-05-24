@@ -3,6 +3,13 @@ import numpy as np
 from tensorflow.python.keras.models import load_model
 
 
+def get_contour_precedence(contour, cols):                  #정렬 알고리즘 함수
+    origin = cv.boundingRect(contour)
+    return origin[1] * cols + origin[0]
+
+
+    
+
 img_color = cv.imread('test5.jpg', cv.IMREAD_COLOR)         #이미지 파일 불러오기
 img_gray = cv.cvtColor(img_color, cv.COLOR_BGR2GRAY)        #그레이스케일 파일로 전환
 
@@ -11,6 +18,7 @@ ret,img_binary = cv.threshold(img_gray, 0, 255, cv.THRESH_BINARY_INV | cv.THRESH
 
 kernel = cv.getStructuringElement( cv.MORPH_RECT, ( 5, 5 ) )        #이진화 결과 공백메꾸기
 img_binary = cv.morphologyEx(img_binary, cv. MORPH_CLOSE, kernel)
+
 
 """
 cv.imshow('digit', img_binary)      
@@ -24,10 +32,15 @@ cv.waitKey(0)
 contours, hierarchy = cv.findContours(img_binary, cv.RETR_EXTERNAL,         #컨투어 검출    #RETR_EXTERNAL->가장 외곽에 있는 컨투어 return
                         cv.CHAIN_APPROX_SIMPLE)
 
+
+contours.sort(key = lambda x:get_contour_precedence(x, img_binary.shape[1]))    ##정렬알고리즘
+
+
+
+
 for contour in contours:
 
     x, y, w, h = cv.boundingRect(contour)                                   #숫자별 경계박스, 4차원배열으로 계층정보 return
-
 
 
     length = max(w, h) + 60                                                 #컨투어로 이미지 근사화(숫자별로 분리)
@@ -61,20 +74,18 @@ for contour in contours:
 
 
 
-"""
+
     cv.rectangle(img_color, (x, y), (x+w, y+h), (255, 255, 0), 2)           #이미지에 대한 사각형 그리기
     location = (x + int(w *0.5), y - 10)                                    #이미지수 위에 인식된 숫자를 적어줍니다 (미구현)
     font = cv.FONT_HERSHEY_COMPLEX  
     fontScale = 1.2
     cv.putText(img_color, str(number), location, font, fontScale, (0,255,0), 2)
-    
-
-    cv.imshow('digit', img_digit)                                           #결과 창 띄워서 보여주기
-    cv.waitKey(0)
 
 
 
-"""
+
+
+
 cv.drawContours(img_color,contours,-1,(0,255,0),3)                          #컨투어 겉면에 그리기
 img_color_resized = cv.resize(img_color,(960,960))
 cv.imshow('result', img_color_resized)
