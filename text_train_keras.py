@@ -1,9 +1,9 @@
-from tensorflow.keras.datasets import mnist
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Flatten
-from tensorflow.keras.layers import Conv2D, MaxPooling2D
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.python.keras.datasets import mnist
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense, Dropout, Flatten
+from tensorflow.python.keras.layers import Conv2D, MaxPooling2D
+from tensorflow.python.keras.utils import to_categorical
+from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 
 
 batch_size = 128
