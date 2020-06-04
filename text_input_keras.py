@@ -10,7 +10,7 @@ def get_contour_precedence(contour, cols):                  #정렬 알고리즘
 
     
 
-img_color = cv.imread('test5.jpg', cv.IMREAD_COLOR)         #이미지 파일 불러오기
+img_color = cv.imread('./testimg/test5.jpg', cv.IMREAD_COLOR)         #이미지 파일 불러오기
 img_gray = cv.cvtColor(img_color, cv.COLOR_BGR2GRAY)        #그레이스케일 파일로 전환
 
 
@@ -33,14 +33,17 @@ contours, hierarchy = cv.findContours(img_binary, cv.RETR_EXTERNAL,         #컨
                         cv.CHAIN_APPROX_SIMPLE)
 
 
-contours.sort(key = lambda x:get_contour_precedence(x, img_binary.shape[1]))    ##정렬알고리즘
-
+contours.sort(key = lambda x:get_contour_precedence(x, img_binary.shape[1]))    #정렬 알고리즘
+                                                                                #img_binary.shape는 이미지파일의 모양을 return
+                                                                                #3개의 값이 return 되는데 Y축, X축, 컬러채널 수를 의미
+                                                                                #img_binary.shape[1]이므로 X축을 인자로 사용(cols로 전달)
 
 
 
 for contour in contours:
 
-    x, y, w, h = cv.boundingRect(contour)                                   #숫자별 경계박스, 4차원배열으로 계층정보 return
+    x, y, w, h = cv.boundingRect(contour)                                   #숫자별 경계박스, 4차원배열으로 사각형의정보 return
+                                                                            #boundingRect : contour에 외접하는 사각형 return
 
 
     length = max(w, h) + 60                                                 #컨투어로 이미지 근사화(숫자별로 분리)
@@ -58,7 +61,7 @@ for contour in contours:
     #cv.imshow('digit', img_digit)
     #cv.waitKey(0)
 
-    model = load_model('model.h5')                                          #학습된 모델 호출
+    model = load_model('number_model.h5')                                          #학습된 모델 호출
 
     img_digit = cv.resize(img_digit, (28, 28), interpolation=cv.INTER_AREA) #이미지 크기를 학습된 모델사이즈로 맞춘다(28 X 28)
 

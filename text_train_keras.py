@@ -1,3 +1,5 @@
+import numpy as np
+import cv2
 from tensorflow.python.keras.datasets import mnist
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense, Dropout, Flatten
@@ -6,9 +8,11 @@ from tensorflow.python.keras.utils import to_categorical
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 
 
+
 batch_size = 128
 num_classes = 10
 epochs = 12
+
 
 
 img_rows, img_cols = 28, 28
@@ -66,4 +70,4 @@ print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
 
-model.save('model.h5')
+model.save('number_model.h5')
