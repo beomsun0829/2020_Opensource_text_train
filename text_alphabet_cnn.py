@@ -8,20 +8,19 @@ from mnist.loader import MNIST
 from sklearn.model_selection import train_test_split
 
 batch_size = 128
-num_classes = 26
+num_classes = 47
 epochs = 10
 
 # Input image dimensions
 img_rows, img_cols = 28, 28
 
 emnist_data = MNIST(path='data\\', return_type='numpy')
-emnist_data.select_emnist('letters')
+emnist_data.select_emnist('balanced')
 X, y = emnist_data.load_training()
 
-X = X.reshape(124800, 28, 28)
-y = y.reshape(124800, 1)
+X = X.reshape(112800, 28, 28)           #124800
+y = y.reshape(112800, 1)                #124800
 
-y = y-1
 
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=111)
 
@@ -33,8 +32,8 @@ x_train = x_train.astype('float32')
 x_test = x_test.astype('float32')
 
 # Rescale the image values to [0, 1]
-x_train /= 255
-x_test /= 255
+x_train /= 255       #255
+x_test /= 255        #255
 
 # Convert class vectors to binary class matrices
 y_train = keras.utils.to_categorical(y_train, num_classes)
@@ -59,7 +58,7 @@ model.compile(loss=keras.losses.categorical_crossentropy,
               metrics=['accuracy'])
 
               
-
+"""
 
 ###
 # Train the model
@@ -69,14 +68,14 @@ model.fit(x_train, y_train,
           verbose=1,
           validation_data=(x_test, y_test))
 # Save the model weights for future reference
-model.save('emnist_cnn_model.h5')
+model.save('emnist_cnn_model_balanced.h5')
 ###
 
+"""
 
 
 
-
-model = load_model('emnist_cnn_model.h5')
+model = load_model('emnist_cnn_model_balanced.h5')
 
 # Evaluate the model using Accuracy and Loss
 score = model.evaluate(x_test, y_test, verbose=0)
