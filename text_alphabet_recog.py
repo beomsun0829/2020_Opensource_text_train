@@ -49,6 +49,7 @@ contours, hierarchy = cv.findContours(img_binary, cv.RETR_EXTERNAL,         #컨
 
 text = open('output_text.txt','w')
 
+model = load_model('emnist_cnn_model_balanced.h5')                                          #학습된 모델 호출
 
 for contour in contours:
 
@@ -71,7 +72,6 @@ for contour in contours:
     #cv.imshow('digit', img_digit)
     #cv.waitKey(0)
 
-    model = load_model('emnist_cnn_model_balanced.h5')                                          #학습된 모델 호출
 
     img_digit = cv.resize(img_digit, (28, 28), interpolation=cv.INTER_AREA) #이미지 크기를 학습된 모델사이즈로 맞춘다(28 X 28)
 
