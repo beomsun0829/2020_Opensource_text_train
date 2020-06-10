@@ -1,6 +1,6 @@
 import subprocess
 from glob import glob
-filelist = glob("text_alphabet_recog2.py")
+filelist = glob("text_alphabet_recog.py")
 
 for file in filelist:
     subprocess.call(['python', file])
