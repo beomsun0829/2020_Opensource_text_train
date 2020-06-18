@@ -7,7 +7,7 @@ from tensorflow.python.keras.models import load_model
 
 def get_contour_precedence(contour, cols):                  #정렬 알고리즘 함수
     origin = cv.boundingRect(contour)
-    return origin[1] * cols + origin[0]
+    return origin[0] * cols + origin[1]
 
 
 letters = {0:'0',1:'1',2:'2',3:'3',4:'4',5:'5',6:'6',7:'7',8:'8',9:'9',
@@ -42,10 +42,11 @@ contours, hierarchy = cv.findContours(img_binary, cv.RETR_EXTERNAL,         #컨
 
 
 
-#contours.sort(key = lambda x:get_contour_precedence(x, img_binary.shape[1]))    #정렬 알고리즘
+contours.sort(key = lambda x:get_contour_precedence(x, img_binary.shape[1]))    #정렬 알고리즘
                                                                                 #img_binary.shape는 이미지파일의 모양을 return
                                                                                 #3개의 값이 return 되는데 Y축, X축, 컬러채널 수를 의미
                                                                                 #img_binary.shape[1]이므로 X축을 인자로 사용(cols로 전달)
+
 
 text = open('output_text.txt','w')
 
