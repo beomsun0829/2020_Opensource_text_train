@@ -2,34 +2,39 @@ import urllib.request
 import urllib.parse
 import sys
 from bs4 import BeautifulSoup
+from tkinter import *
+from tkinter import messagebox
 
-with open('start.txt','r',encoding='utf8') as f:
-    date = f.read()
 
-plusUrl = urllib.parse.quote_plus(date)
+def crawling():
+    with open('source.txt', 'r', encoding='utf8') as f:
+        date = f.read()
 
-pageNum = 1
-count = 1
+    plusUrl = urllib.parse.quote_plus(date)
 
-i = input('몇페이지를 크롤링 할까요? : ')
+    pageNum = 1
+    count = 1
 
-sys.stdout = open('크롤링.txt', 'a', encoding='UTF-8')
+    i = 1  # 1페이지로 고정
 
-lastPage = int(i) * 10 - 9
-while pageNum < lastPage + 1:
-    url = f'https://search.naver.com/search.naver?date_from=&date_option=0&date_to=&dup_remove=1&nso=&post_blogurl=&post_blogurl_without=&query={plusUrl}&sm=tab_pge&srchby=all&st=sim&where=post&start={pageNum}'
+    sys.stdout = open('output.txt', 'a', encoding='UTF-8')
 
-    html = urllib.request.urlopen(url).read()
-    soup = BeautifulSoup(html, 'html.parser')
+    lastPage = int(i) * 10 - 9
+    while pageNum < lastPage + 1:
+        url = f'https://search.naver.com/search.naver?date_from=&date_option=0&date_to=&dup_remove=1&nso=&post_blogurl=&post_blogurl_without=&query={plusUrl}&sm=tab_pge&srchby=all&st=sim&where=post&start={pageNum}'
 
-    title = soup.find_all(class_='sh_blog_title')
+        html = urllib.request.urlopen(url).read()
+        soup = BeautifulSoup(html, 'html.parser')
 
-    print(f'-----{plusUrl}의 {count}페이지 결과 입니다.-----')
-    for i in title:
-        print(i.attrs['title'])
-        print(i.attrs['href'])
+        title = soup.find_all(class_='sh_blog_title')
 
-    print()
+        print(f'-----{plusUrl}의 {count}페이지 결과 입니다.-----')
+        for i in title:
+            print(i.attrs['title'])
+            print(i.attrs['href'])
 
-    pageNum += 10
-    count +=1
+        messagebox.showinfo("crawling", title)
+        pageNum += 10
+        count += 1
+
+crawling()

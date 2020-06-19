@@ -3,8 +3,6 @@ import tkinter
 import sqlite3
 con = sqlite3.connect("ScheduleDB")
 cur = con.cursor()
-cal = None
-text = None
 #cur.execute("CREATE TABLE userTable(SC_date TEXT, SC_name TEXT, SC_hour TEXT, SC_min TEXT, SC_detail TEXT)")
 
 from tkinter import*

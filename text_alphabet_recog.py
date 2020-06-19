@@ -48,7 +48,7 @@ contours.sort(key = lambda x:get_contour_precedence(x, img_binary.shape[1]))    
                                                                                 #img_binary.shape[1]이므로 X축을 인자로 사용(cols로 전달)
 
 
-text = open('output_text.txt','w')
+text = open('source.txt','w')
 
 model = load_model('emnist_cnn_model_balanced.h5')                                          #학습된 모델 호출
 

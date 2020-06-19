@@ -1,70 +1,69 @@
 import subprocess
 from glob import glob
+from tkinter import *
+from tkinter import messagebox
+
 filelist = glob("text_alphabet_recog.py")
 
 for file in filelist:
     subprocess.call(['python', file])
 
+def campusmap():
+    filelist = glob("CampusMap.py")
 
-def Print_menu():
-    print("#---------------------------------------------#")
-    print("1. 주석 달기")
-    print("2. 파파고 번역")
-    print("3. 웹 크롤링")
-    print("4. 캘린더")
-    print("0. 종료\n")
-    menu = input("메뉴선택: ")
-    return int(menu)
+    for file in filelist:
+        subprocess.call(['python', file])
+        break
+
+def translate():
+    filelist = glob("papago.py")
+
+    for file in filelist:
+        subprocess.call(['python', file])
+
+def crawling():
+    filelist = glob("crawling.py")
+
+    for file in filelist:
+        subprocess.call(['python', file])
+
+
+def calendar():
+    filelist = glob("Calendar.py")
+
+    for file in filelist:
+        subprocess.call(['python', file])
+
+def close():
+    messagebox.showinfo("종료", "프로그램을 종료합니다.")
+    quit()
 
 
 def main():
-    print()
-    print("          글씨인식 시스템 부가기능      \n")
-    print("메뉴 생성\n")
-    while 1:
-        menu = Print_menu()
+    window = Tk()
+    window.title("메뉴선택")  # GUI창 이름변경
+    window.geometry("640x400+100+100")  # 크기 설정
+    window.resizable(0, 0)
+    photo = PhotoImage(file="CBNU.png");
+    labe2 = Label(window, image=photo);
+    labe3 = Label(window, text='글씨 인식 프로그램', font=(30))
 
-        # ----- 주석 달기 -----
-        if menu == 1:
-            import subprocess
-            from glob import glob
-            filelist = glob("CampusMap.py")
+    # 호출
+    b1 = Button(window, text="1. 번역", width=15, height=5, compound="c", command=translate)
+    b2 = Button(window, text="2. 웹 크롤링", width=15, height=5, compound="c", command=crawling)
+    b3 = Button(window, text="3. 학교 위치 정보", width=15, height=5, compound="c", command=campusmap)
+    b4 = Button(window, text="4. 캘린더", width=15, height=5, compound="c", command=calendar)
+    b5 = Button(window, text="5. 종료", width=15, height=5, compound="c", command=close)
 
-            for file in filelist:
-                subprocess.call(['python', file])
-                break
+    labe2.pack()
+    labe3.pack()
+    b1.pack(side=LEFT, padx=10)
+    b2.pack(side=LEFT, padx=10)
+    b3.pack(side=LEFT, padx=10)
+    b4.pack(side=LEFT, padx=10)
+    b5.pack(side=LEFT, padx=10)
 
-        # ----- 파파고 번역 -----
-        elif menu == 2:
-            import subprocess
-            from glob import glob
-            filelist = glob("papago.py")
-
-            for file in filelist:
-                subprocess.call(['python', file])
-
-        # ----- 웹 크롤링 -----
-        elif menu == 3:
-            import subprocess
-            from glob import glob
-            filelist = glob("maincrawling.py")
-
-            for file in filelist:
-                subprocess.call(['python', file])
-
-        # ----- 파파고 번역 -----
-        elif menu == 4:
-            import subprocess
-            from glob import glob
-            filelist = glob("Calendar.py")
-
-            for file in filelist:
-                subprocess.call(['python', file])
-
-        else:
-            print("종료되었습니다.")
-            break
+    window.mainloop()
 
 
-if __name__ == "__main__":
-    main()
+main()
